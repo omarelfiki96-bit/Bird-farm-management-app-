@@ -1,0 +1,11 @@
+{
+  "name": "إدارة مزرعة العصافير",
+  "short_name": "مزرعتي",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f7fc",
+  "theme_color": "#1266d5",
+  "description": "إدارة الطيور والمواسم والإنتاج والمصروفات والإيرادات"
+}

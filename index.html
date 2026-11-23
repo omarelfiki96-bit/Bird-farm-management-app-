@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1266d5">
+<title>إدارة مزرعة العصافير</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--blue:#1266d5;--blue2:#0b4da8;--bg:#f3f7fc;--card:#fff;--ink:#17243a;--muted:#718096;--line:#e4ebf3;--green:#14865c;--red:#c63d4b;--amber:#a66b08}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+header{background:linear-gradient(120deg,#0b4da8,#1682e8);color:white;padding:22px max(18px,calc((100% - 1180px)/2));}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:#ffffff24;display:grid;place-items:center;font-size:25px}
+h1{font-size:22px;margin:0 0 5px}.sub{font-size:13px;opacity:.85}.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{border:0;border-radius:10px;padding:10px 14px;font:inherit;cursor:pointer}.primary{background:var(--blue);color:#fff}.light{background:#ffffff20;color:white;border:1px solid #ffffff55}.outline{background:white;border:1px solid var(--line);color:var(--ink)}.danger{background:#fff0f1;color:var(--red)}
+main{max-width:1180px;margin:22px auto;padding:0 16px 50px}.tabs{display:flex;gap:8px;overflow:auto;padding:4px 0 14px}.tab{white-space:nowrap;background:white;color:#526176;border:1px solid var(--line)}.tab.active{background:var(--blue);color:white;border-color:var(--blue)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:8px 0 18px}.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 14px #1a355508}.stat{padding:17px}.stat small{color:var(--muted)}.num{font-size:27px;font-weight:bold;margin-top:9px}.panel{padding:18px;margin-bottom:16px}.panel h2{font-size:18px;margin:0 0 15px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:13px;color:#526176}.field input,.field select,.field textarea,.search{width:100%;padding:11px 12px;border:1px solid #dce5ef;border-radius:10px;background:white;font:inherit;color:var(--ink);min-width:0}.field textarea{min-height:75px;resize:vertical}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:650px;background:white}th,td{padding:12px 11px;text-align:right;border-bottom:1px solid var(--line);font-size:13px}th{background:#edf4fc;color:#34445b;white-space:nowrap}tr:last-child td{border-bottom:0}.muted{color:var(--muted)}.pill{display:inline-block;border-radius:20px;padding:5px 9px;background:#eaf7f1;color:var(--green);font-size:12px}.pill.blue{background:#edf4ff;color:var(--blue)}.pill.amber{background:#fff5df;color:var(--amber)}.pill.red{background:#fff0f1;color:var(--red)}
+.empty{text-align:center;padding:28px;color:var(--muted)}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px}.toolbar .search{max-width:320px}.hidden{display:none!important}.notice{background:#fff8e8;border:1px solid #f2dfb5;padding:12px;border-radius:11px;color:#775414;font-size:13px;line-height:1.7;margin-bottom:14px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}header{padding:18px}.top-actions{width:100%}.top-actions button{flex:1}main{margin-top:14px}.panel{padding:14px}.num{font-size:24px}}
+
+:root{--blue:#2563eb;--blue2:#1e40af;--bg:#f5f7fb;--green:#059669;--red:#dc2626;--amber:#d97706}
+body{background:linear-gradient(180deg,#eef4ff 0,#f7f9fc 260px);line-height:1.55}header{background:linear-gradient(125deg,#142b55,#1d4ed8 58%,#0ea5e9);box-shadow:0 8px 28px #153b7830}.tab{transition:.18s}.tab:hover{transform:translateY(-1px);box-shadow:0 4px 12px #1d4ed81a}.tab.active{box-shadow:0 5px 14px #2563eb35}.stat{position:relative;overflow:hidden}.stat:after{content:'';position:absolute;inset:auto -18px -28px auto;width:90px;height:90px;border-radius:50%;background:#2563eb0b}.num{color:#173b77}.panel{box-shadow:0 8px 26px #183b6b0a}.dashboard-extra{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 16px}.metric{padding:14px 16px;border-radius:14px;background:linear-gradient(145deg,#fff,#f4f8ff);border:1px solid #e2eaf7}.metric b{font-size:23px;color:#1e40af;display:block}.metric span{font-size:12px;color:#64748b}input:focus,select:focus,textarea:focus{outline:3px solid #2563eb20;border-color:#60a5fa!important}@media(max-width:760px){.dashboard-extra{grid-template-columns:repeat(2,1fr)}}
+
+@media(max-width:600px){header{padding:14px 12px}.brand{align-items:flex-start}.logo{width:40px;height:40px;flex:0 0 40px}h1{font-size:18px}.sub{font-size:11px}.top-actions{display:grid;grid-template-columns:1fr 1fr}.top-actions button{font-size:12px;padding:9px 6px}main{padding:0 10px 30px}.tabs{position:sticky;top:0;z-index:10;background:#f5f7fb;padding:8px 0;gap:6px}.tab{padding:10px 12px;font-size:13px}.cards{gap:8px}.stat{padding:12px}.stat small,.metric span{font-size:11px}.num{font-size:21px}.panel{padding:12px;border-radius:13px}.panel h2{font-size:16px}.dashboard-extra{gap:8px}.metric{padding:11px 10px}.metric b{font-size:19px}.field input,.field select,.field textarea,.search{font-size:16px;min-height:44px}.actions button{flex:1;min-height:44px}.tablewrap{margin-inline:-2px}table{min-width:620px}footer{padding:14px}}
+</style>
+</head>
+<body>
+<header><div class="top">
+ <div class="brand"><div class="logo">🐦</div><div><h1>إدارة مزرعة العصافير</h1><div class="sub">نظام متابعة الطيور والأزواج والتفريخ والرعاية</div></div></div>
+ <div class="top-actions"><button class="light" id="exportBtn">تصدير نسخة احتياطية</button><button class="light" id="importBtn">استيراد نسخة</button><input id="importFile" type="file" accept="application/json" hidden></div>
+</div></header>
+<main>
+<nav class="tabs" aria-label="أقسام البرنامج">
+<button class="tab active" data-page="dashboard">الرئيسية</button><button class="tab" data-page="birds">الطيور</button><button class="tab" data-page="pairs">الأزواج</button><button class="tab" data-page="eggs">البيض والتفريخ</button><button class="tab" data-page="meds">الأدوية</button><button class="tab" data-page="finance">المصروفات والإيرادات</button><button class="tab" data-page="seasons">المواسم</button>
+</nav>
+<section id="dashboard" class="page">
+ <div class="cards">
+  <div class="stat"><small>الطيور المسجلة</small><div class="num" id="birdCount">0</div></div><div class="stat"><small>الأزواج المسجلة</small><div class="num" id="pairCount">0</div></div>
+  <div class="stat"><small>البيض المسجل</small><div class="num" id="eggCount">0</div></div>
+  <div class="stat"><small>حالات الفقس</small><div class="num" id="hatchedCount">0</div></div>
+  <div class="stat"><small>الكورسات النشطة</small><div class="num" id="medCount">0</div></div>
+ </div>
+ <div class="notice">قاعدة بيانات محلية IndexedDB تحفظ البيانات داخل المتصفح على هذا الجهاز. استخدم «تصدير نسخة احتياطية» بانتظام. المزامنة بين الهاتف والكمبيوتر ستضاف في مرحلة لاحقة.</div>
+ <div class="dashboard-extra"><div class="metric"><span>بيض مخصب</span><b id="fertileCount">0</b></div><div class="metric"><span>بيض غير مخصب</span><b id="clearCount">0</b></div><div class="metric"><span>بيض تالف / بايظ</span><b id="rottenCount">0</b></div><div class="metric"><span>بيض تحت حضانة</span><b id="incubatingCount">0</b></div><div class="metric"><span>أزواج حاضنة</span><b id="broodingPairsCount">0</b></div><div class="metric"><span>إجمالي الزغاليل الخارجة</span><b id="chicksHatchedCount">0</b></div><div class="metric"><span>زغاليل حية</span><b id="chicksAliveCount">0</b></div><div class="metric"><span>زغاليل ماتت</span><b id="chicksDeadCount">0</b></div><div class="metric"><span>نسبة الفقس من المخصب</span><b id="hatchRate">0%</b></div></div>
+ <div class="panel"><h2>أداء الأزواج والإنتاج</h2><div class="tablewrap"><table><thead><tr><th>الزوج</th><th>بيض</th><th>مخصب</th><th>غير مخصب</th><th>تالف</th><th>فقس</th><th>زغاليل ميتة</th><th>تحت حضانة</th></tr></thead><tbody id="pairProductionTable"></tbody></table></div><div id="pairProductionEmpty" class="empty">سجّل البيض والفروخ لعرض أداء الأزواج.</div></div>
+ <div class="panel"><h2>آخر الأزواج المضافة</h2><div id="recentPairs" class="empty">لا توجد بيانات حتى الآن. ابدأ بإضافة أول زوج من قسم الأزواج.</div></div>
+ <div class="panel"><h2>ملخص المزرعة حسب الفترة</h2>
+  <div class="row"><select id="dashPeriod" class="search" style="max-width:180px"><option value="week">الأسبوع الحالي</option><option value="month" selected>الشهر الحالي</option><option value="year">السنة الحالية</option><option value="season">الموسم المختار</option><option value="all">كل الفترات</option><option value="custom">فترة مخصصة</option></select><select id="dashSeason" class="search" style="max-width:220px"><option value="">اختر الموسم</option></select><input id="dashFrom" type="date" class="search hidden"><input id="dashTo" type="date" class="search hidden"></div>
+  <div class="dashboard-extra" style="margin-top:14px"><div class="metric"><span>المصروفات</span><b id="dashExpenses">0 ج.م</b></div><div class="metric"><span>الإيرادات</span><b id="dashIncome">0 ج.م</b></div><div class="metric"><span>صافي الحركة</span><b id="dashNet">0 ج.م</b></div><div class="metric"><span>البيض خلال الفترة</span><b id="dashEggs">0</b></div><div class="metric"><span>البيض المخصب</span><b id="dashFertile">0</b></div><div class="metric"><span>البيض الذي فقس</span><b id="dashHatched">0</b></div><div class="metric"><span>الزغاليل المسجلة</span><b id="dashChicks">0</b></div><div class="metric"><span>الفروخ المفطومة</span><b id="dashWeaned">0</b></div></div>
+ </div>
+ <div class="panel"><h2>تنبيهات الأدوية</h2><div id="medAlerts" class="empty">لا توجد كورسات مسجلة.</div></div>
+</section>
+
+<section id="birds" class="page hidden">
+ <div class="panel"><h2 id="birdFormTitle">تسجيل طائر جديد</h2>
+ <form id="birdForm"><input type="hidden" id="birdEditId"><div class="formgrid">
+  <div class="field"><label>نوع الطائر *</label><select id="birdSpecies" required><option value="">اختر النوع</option><option>بادجي عادي</option><option>بادجي إنجليزي</option><option>روز</option><option>فيشر</option><option>أخرى</option></select></div>
+  <div class="field"><label>رقم الحلقة *</label><input id="birdRing" required placeholder="مثال: 2026-001"></div>
+  <div class="field"><label>الجنس</label><select id="birdSex"><option value="">غير معروف</option><option>ذكر</option><option>أنثى</option></select></div>
+  <div class="field"><label>تاريخ الفقس</label><input id="birdHatch" type="date"></div>
+  <div class="field"><label>الطفرة / اللون</label><input id="birdMutation" placeholder="مثال: أزرق، سبانجل..."></div>
+  <div class="field"><label>مصدر الطائر</label><select id="birdSource"><option value="إنتاج المزرعة">إنتاج المزرعة</option><option value="شراء">شراء</option><option value="هدية">هدية</option><option value="أخرى">أخرى</option></select></div>
+  <div class="field"><label>تاريخ الشراء (إن وجد)</label><input id="birdPurchaseDate" type="date"></div>
+  <div class="field"><label>سعر الشراء</label><input id="birdPurchasePrice" type="number" min="0" step="0.01"></div>
+  <div class="field"><label>العمر التقريبي إذا كان تاريخ الفقس مجهولًا</label><input id="birdApproxAge" placeholder="مثال: 8 شهور"></div>
+  <div class="field"><label>المرحلة العمرية</label><select id="birdLifeStage"><option>زغلول</option><option>شاب</option><option>بالغ</option><option>غير محدد</option></select></div>
+  <div class="field"><label>الحالة الصحية الحالية</label><select id="birdHealth"><option>طبيعي</option><option>تحت الملاحظة</option><option>مريض</option><option>تحت العلاج</option><option>متعافٍ</option></select></div>
+  <div class="field"><label>حالة الملكية</label><select id="birdOwnership"><option value="عندي">عندي</option><option value="اتباع">اتباع</option></select></div>
+  <div class="field"><label>تاريخ البيع</label><input id="birdSaleDate" type="date"></div>
+  <div class="field"><label>اسم المشتري</label><input id="birdBuyer" placeholder="اسم المشتري"></div>
+  <div class="field"><label>هاتف المشتري</label><input id="birdBuyerPhone" type="tel"></div>
+  <div class="field"><label>سعر البيع</label><input id="birdSalePrice" type="number" min="0" step="0.01"></div>
+  <div class="field"><label>الحالة</label><select id="birdStatus"><option>موجود</option><option>ضمن زوج</option><option>مباع</option><option>نافق</option><option>مفقود</option></select></div>
+  <div class="field"><label>الأب (اختياري)</label><select id="birdFather"><option value="">غير مسجل</option></select></div>
+  <div class="field"><label>الأم (اختياري)</label><select id="birdMother"><option value="">غير مسجل</option></select></div>
+  <div class="field full"><label>ملاحظات</label><textarea id="birdNotes" placeholder="أي معلومات إضافية عن الطائر..."></textarea></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ الطائر</button><button class="outline" type="button" id="birdCancel">مسح النموذج</button></div></form></div>
+ <div class="panel"><h2>سجل الطيور</h2><div class="toolbar"><input class="search" id="birdSearch" list="birdSearchHints" autocomplete="off" placeholder="اكتب حرفًا أو رقم الحلقة للبحث الفوري..."><datalist id="birdSearchHints"></datalist><select class="search" id="birdRingYearFilter"><option value="">كل سنوات الحلقات</option></select><select class="search" id="birdSpeciesFilter"><option value="">كل الأنواع</option><option>بادجي عادي</option><option>بادجي إنجليزي</option><option>روز</option><option>فيشر</option><option>أخرى</option></select></div>
+ <div class="tablewrap"><table><thead><tr><th>النوع</th><th>رقم الحلقة</th><th>الجنس</th><th>العمر</th><th>المرحلة</th><th>الملكية</th><th>الحالة الصحية</th><th>إجراءات</th></tr></thead><tbody id="birdsTable"></tbody></table></div><div id="birdsEmpty" class="empty">لا توجد طيور مسجلة.</div></div>
+ <div class="panel"><h2>الملف الكامل للعصفور</h2>
+  <div class="formgrid"><div class="field"><label>اختر الطائر لعرض ملفه</label><select id="profileBird"><option value="">اختر طائرًا</option></select></div><div class="field"><label>إضافة صور للطائر</label><input id="birdPhotos" type="file" accept="image/*" multiple></div></div>
+  <div id="birdProfile" class="notice" style="margin-top:12px">اختر طائرًا لعرض صوره وتاريخه الصحي وملاحظاته وشجرة عائلته.</div>
+  <div id="birdProfilePhotos" class="row"></div>
+  <div class="panel" style="margin-top:14px"><h3>إضافة حدث في حياة الطائر</h3><form id="birdEventForm"><div class="formgrid">
+   <div class="field"><label>نوع الحدث</label><select id="eventType"><option>دواء / علاج</option><option>قلش</option><option>مرض / مشكلة صحية</option><option>مكمل غذائي</option><option>عزل</option><option>تعافٍ</option><option>تزاوج / إنتاج</option><option>فطام</option><option>وزن / قياس</option><option>حدث آخر</option></select></div>
+   <div class="field"><label>اسم الحدث / المنتج</label><input id="eventName" placeholder="اسم الدواء أو وصف الحدث"></div>
+   <div class="field"><label>تاريخ البداية</label><input id="eventStart" type="date" required></div><div class="field"><label>تاريخ النهاية</label><input id="eventEnd" type="date"></div>
+   <div class="field"><label>الجرعة / التفاصيل</label><input id="eventDose" placeholder="الجرعة أو تفاصيل الحدث"></div><div class="field"><label>الحالة</label><select id="eventStatus"><option>مستمر</option><option>انتهى</option><option>متابعة</option></select></div>
+   <div class="field full"><label>الأعراض والنتيجة والملاحظات</label><textarea id="eventNotes"></textarea></div>
+  </div><div class="actions"><button class="primary" type="submit">حفظ الحدث</button></div></form></div>
+  <div class="panel"><h3>ملاحظة جديدة</h3><div class="field"><textarea id="birdQuickNote" placeholder="اكتب ملاحظة عن الطائر..."></textarea></div><div class="actions"><button class="outline" id="addBirdNote" type="button">إضافة الملاحظة</button></div><div id="birdNotesList"></div></div>
+  <div class="panel"><h3>السجل الزمني للأحداث</h3><div id="birdEventsList" class="empty">لا توجد أحداث مسجلة.</div></div>
+  <div class="panel"><h3>شجرة العائلة</h3><div id="birdFamily" class="empty">اختر طائرًا لعرض نسبه.</div></div>
+ </div>
+ <div class="panel"><h2>سجل الفروخ ومتابعة النمو</h2>
+  <form id="chickForm"><div class="formgrid">
+   <div class="field"><label>البيضة التي فقس منها</label><select id="chickEgg"><option value="">اختر البيضة</option></select></div>
+   <div class="field"><label>تاريخ الفقس *</label><input id="chickHatch" type="date" required></div>
+   <div class="field"><label>الجنس</label><select id="chickSex"><option value="">غير معروف</option><option>ذكر</option><option>أنثى</option></select></div>
+   <div class="field"><label>الوزن عند التسجيل (جرام)</label><input id="chickWeight" type="number" min="0" step="0.1"></div>
+   <div class="field"><label>حالة الفرخ</label><select id="chickLifeStatus"><option>حي</option><option>نافق</option></select></div><div class="field"><label>تاريخ النفوق</label><input id="chickDeathDate" type="date"></div><div class="field"><label>سبب النفوق / ملاحظات</label><input id="chickDeathReason"></div><div class="field"><label>حالة الفطام</label><select id="chickWeaned"><option>غير مفطوم</option><option>مفطوم</option></select></div>
+   <div class="field"><label>تاريخ الفطام</label><input id="chickWeanDate" type="date"></div>
+   <div class="field full"><label>ملاحظات الفرخ</label><textarea id="chickNotes"></textarea></div>
+  </div><div class="actions"><button class="primary" type="submit">حفظ الفرخ</button></div></form>
+  <div class="tablewrap"><table><thead><tr><th>البيضة</th><th>الزوج المنتج</th><th>الفقس</th><th>الجنس</th><th>الوزن</th><th>حالة الفرخ</th><th>الفطام</th><th>الإجراء</th></tr></thead><tbody id="chicksTable"></tbody></table></div><div id="chicksEmpty" class="empty">لا توجد فروخ مسجلة.</div>
+ </div>
+</section>
+
+
+<section id="seasons" class="page hidden">
+ <div class="panel"><h2>إضافة موسم تربية</h2><form id="seasonForm"><input type="hidden" id="seasonEditId"><div class="formgrid"><div class="field"><label>اسم الموسم *</label><input id="seasonName" required placeholder="مثال: موسم 2026-2027"></div><div class="field"><label>تاريخ البداية *</label><input id="seasonStart" type="date" required></div><div class="field"><label>تاريخ النهاية</label><input id="seasonEnd" type="date"></div><div class="field"><label>الحالة</label><select id="seasonStatus"><option>نشط</option><option>مكتمل</option><option>متوقف</option></select></div></div><div class="actions"><button class="primary">حفظ الموسم</button><button class="outline" type="button" id="seasonCancel">مسح النموذج</button></div></form></div>
+ <div class="panel"><h2>المواسم المسجلة</h2><div class="tablewrap"><table><thead><tr><th>الموسم</th><th>البداية</th><th>النهاية</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="seasonsTable"></tbody></table></div><div id="seasonsEmpty" class="empty">لم تتم إضافة مواسم بعد.</div></div>
+ <div class="panel"><h2>تقرير الموسم</h2><div class="field"><label>اختر الموسم</label><select id="activeSeason"></select></div><div class="dashboard-extra" style="margin-top:14px"><div class="metric"><span>عدد الأزواج المنتجة</span><b id="seasonPairs">0</b></div><div class="metric"><span>إجمالي البيض</span><b id="seasonEggs">0</b></div><div class="metric"><span>البيض المخصب</span><b id="seasonFertile">0</b></div><div class="metric"><span>البيض الذي فقس</span><b id="seasonHatched">0</b></div><div class="metric"><span>الزغاليل المسجلة</span><b id="seasonChicks">0</b></div><div class="metric"><span>الفروخ المفطومة</span><b id="seasonWeaned">0</b></div><div class="metric"><span>الزغاليل النافقة</span><b id="seasonDead">0</b></div></div><div id="seasonRates" class="notice">اختر موسمًا لعرض نسب الإنتاج.</div><h3>إنتاج كل زوج</h3><div class="tablewrap"><table><thead><tr><th>الزوج</th><th>بيض</th><th>مخصب</th><th>فقس</th><th>فروخ حية</th><th>مفطومة</th><th>نافقة</th></tr></thead><tbody id="seasonPairTable"></tbody></table></div><div id="seasonPairEmpty" class="empty">لا توجد بيانات لهذا الموسم.</div></div>
+</section>
+
+<section id="pairs" class="page hidden">
+ <div class="panel"><h2 id="pairFormTitle">إضافة زوج جديد</h2>
+ <form id="pairForm"><input type="hidden" id="pairEditId">
+ <div class="formgrid">
+  <div class="field"><label>رقم الزوج *</label><input id="pairCode" required placeholder="مثال: N-001"></div>
+  <div class="field"><label>نوع الطائر *</label><select id="pairSpecies" required><option value="">اختر النوع</option><option>بادجي عادي</option><option>بادجي إنجليزي</option><option>روز</option><option>فيشر</option><option>أخرى</option></select></div>
+  <div class="field"><label>الذكر من سجل الطيور *</label><select id="maleBird" required><option value="">اختر الذكر</option></select></div>
+  <div class="field"><label>الأنثى من سجل الطيور *</label><select id="femaleBird" required><option value="">اختر الأنثى</option></select></div>
+  <div class="field"><label>تاريخ بداية الارتباط *</label><input id="pairDate" type="date" required></div>
+  <div class="field"><label>تاريخ نهاية الارتباط</label><input id="pairEndDate" type="date"></div>
+  <div class="field"><label>حالة الزوج</label><select id="pairStatus"><option>نشط</option><option>متوقف</option><option>منتهي</option></select></div>
+  <div class="field full"><label>ملاحظات</label><textarea id="pairNotes" placeholder="الطفرة، العمر، ملاحظات التزاوج..."></textarea></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ الزوج</button><button class="outline" type="button" id="pairCancel">مسح النموذج</button></div></form></div>
+ <div class="panel"><h2>سجل الأزواج</h2><div class="toolbar"><input class="search" id="pairSearch" placeholder="ابحث برقم الزوج أو النوع..."></div><div class="tablewrap"><table><thead><tr><th>رقم الزوج</th><th>النوع</th><th>الذكر</th><th>الأنثى</th><th>بداية الارتباط</th><th>نهاية الارتباط</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="pairsTable"></tbody></table></div><div id="pairsEmpty" class="empty">لا توجد أزواج مسجلة.</div></div>
+</section>
+<section id="eggs" class="page hidden">
+ <div class="panel"><h2 id="eggFormTitle">تسجيل بيضة / متابعة تفريخ</h2>
+ <form id="eggForm"><input type="hidden" id="eggEditId"><div class="formgrid">
+  <div class="field"><label>موسم التربية *</label><select id="eggSeason" required></select></div>
+  <div class="field"><label>رقم الزوج *</label><select id="eggPair" required><option value="">اختر الزوج</option></select></div>
+  <div class="field"><label>رقم البيضة</label><input id="eggNumber" type="number" min="1" placeholder="1"></div>
+  <div class="field"><label>تاريخ وضع البيضة *</label><input id="laidDate" type="date" required></div>
+  <div class="field"><label>مدة الحضانة بالأيام</label><input id="incubationDays" type="number" min="1" max="60" value="18"></div>
+  <div class="field"><label>تاريخ الكشف</label><input id="candlingDate" type="date"></div>
+  <div class="field"><label>حالة البيضة</label><select id="eggStatus"><option>لم يتم الكشف</option><option>مخصب</option><option>غير مخصب</option><option>فقس</option><option>تالف / بايظ</option></select></div>
+  <div class="field"><label>هل البيض تحت حضانة؟</label><select id="eggIncubating"><option value="نعم">نعم</option><option value="لا">لا</option></select></div><div class="field"><label>الزوج الحاضن (إن اختلف عن المنتج)</label><select id="fosterPair"><option value="">لا يوجد / الزوج المنتج</option></select></div>
+  <div class="field"><label>تاريخ الفقس الفعلي</label><input id="hatchDate" type="date"></div>
+  <div class="field full"><label>ملاحظات</label><textarea id="eggNotes"></textarea></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ السجل</button><button class="outline" type="button" id="eggCancel">مسح النموذج</button></div></form></div>
+ <div class="panel"><h2>سجل البيض</h2><div class="toolbar"><input class="search" id="eggSearch" placeholder="ابحث برقم الزوج..."><select class="search" id="eggFilter"><option value="">كل الحالات</option><option>لم يتم الكشف</option><option>مخصب</option><option>غير مخصب</option><option>فقس</option><option>تالف / بايظ</option></select></div><div class="tablewrap"><table><thead><tr><th>الزوج</th><th>البيضة</th><th>تاريخ الوضع</th><th>الفقس المتوقع</th><th>حالة البيضة</th><th>الفقس الفعلي</th><th>إجراءات</th></tr></thead><tbody id="eggsTable"></tbody></table></div><div id="eggsEmpty" class="empty">لا توجد سجلات بيض.</div></div>
+</section>
+<section id="meds" class="page hidden">
+ <div class="notice">سجل إداري لمتابعة الكورسات والمواعيد فقط. أدخل الجرعة وطريقة الاستخدام وفق تعليمات الطبيب البيطري أو النشرة المعتمدة؛ البرنامج لا يحدد جرعات علاجية.</div>
+ <div class="panel"><h2 id="medFormTitle">تسجيل دواء / كورس</h2><form id="medForm"><input type="hidden" id="medEditId"><div class="formgrid">
+  <div class="field"><label>اسم الدواء *</label><input id="medName" required></div>
+  <div class="field"><label>نوع الطائر</label><input id="medSpecies" placeholder="بادجي عادي، إنجليزي..."></div>
+  <div class="field"><label>رقم الطائر أو الزوج</label><input id="medBird" placeholder="رقم الحلقة أو الزوج"></div>
+  <div class="field"><label>تاريخ أول جرعة *</label><input id="medStart" type="date" required></div>
+  <div class="field"><label>تاريخ آخر جرعة / نهاية الكورس</label><input id="medEnd" type="date"></div>
+  <div class="field"><label>حالة الدواء</label><select id="medStatus"><option>مستمر</option><option>انتهى</option><option>متوقف</option></select></div>
+  <div class="field full"><label>طريقة الإعطاء / ملاحظات</label><textarea id="medMethod" placeholder="حسب وصف الطبيب أو النشرة"></textarea></div>
+ </div><div class="actions"><button class="primary" type="submit">حفظ الدواء</button><button class="outline" type="button" id="medCancel">مسح النموذج</button></div></form></div>
+ <div class="panel"><h2>سجل الأدوية</h2><div class="tablewrap"><table><thead><tr><th>الدواء</th><th>النوع</th><th>رقم الطائر/الزوج</th><th>أول جرعة</th><th>نهاية الكورس</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="medsTable"></tbody></table></div><div id="medsEmpty" class="empty">لا توجد أدوية مسجلة.</div></div>
+</section>
+<section id="finance" class="page hidden">
+ <div class="panel"><h2>تسجيل حركة مالية</h2><form id="financeForm"><input type="hidden" id="financeEditId"><div class="formgrid"><div class="field"><label>نوع الحركة *</label><select id="financeType" required><option value="expense">مصروف</option><option value="income">إيراد</option></select></div><div class="field"><label>التصنيف *</label><select id="financeCategory"><option>أكل وحبوب</option><option>خلطات وبيض</option><option>أدوية ومكملات</option><option>أقفاص ومستلزمات</option><option>كهرباء ومياه</option><option>نقل وشحن</option><option>شراء طيور</option><option>بيع طيور</option><option>بيع إنتاج</option><option>أخرى</option></select></div><div class="field"><label>المبلغ بالجنيه المصري *</label><input id="financeAmount" type="number" min="0.01" step="0.01" required placeholder="0.00"></div><div class="field"><label>التاريخ *</label><input id="financeDate" type="date" required></div><div class="field"><label>الموسم المرتبط</label><select id="financeSeason"><option value="">بدون موسم</option></select></div><div class="field"><label>طريقة الدفع</label><select id="financeMethod"><option>نقدي</option><option>تحويل بنكي / محفظة</option><option>بطاقة</option><option>آجل</option></select></div><div class="field full"><label>البيان / ملاحظات</label><textarea id="financeNotes" placeholder="مثال: شراء 5 كجم حبوب"></textarea></div></div><div class="actions"><button class="primary">حفظ الحركة</button><button class="outline" type="button" id="financeCancel">مسح النموذج</button></div></form></div>
+ <div class="panel"><h2>ملخص مالي</h2><div class="row"><select id="financePeriod" class="search" style="max-width:180px"><option value="week">الأسبوع الحالي</option><option value="month" selected>الشهر الحالي</option><option value="year">السنة الحالية</option><option value="season">الموسم المختار</option><option value="all">كل الفترات</option><option value="custom">فترة مخصصة</option></select><select id="financeSeasonFilter" class="search" style="max-width:220px"><option value="">كل المواسم</option></select><input id="financeFrom" type="date" class="search hidden"><input id="financeTo" type="date" class="search hidden"></div><div class="dashboard-extra" style="margin-top:14px"><div class="metric"><span>إجمالي المصروفات</span><b id="finExpenses">0 ج.م</b></div><div class="metric"><span>إجمالي الإيرادات</span><b id="finIncome">0 ج.م</b></div><div class="metric"><span>صافي الربح / الخسارة</span><b id="finNet">0 ج.م</b></div><div class="metric"><span>عدد الحركات</span><b id="finCount">0</b></div></div></div>
+ <div class="panel"><h2>سجل الحركات المالية</h2><div class="tablewrap"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>التصنيف</th><th>المبلغ</th><th>الموسم</th><th>البيان</th><th>إجراءات</th></tr></thead><tbody id="financeTable"></tbody></table></div><div id="financeEmpty" class="empty">لا توجد حركات مالية مسجلة.</div></div>
+</section>
+<footer>إدارة مزرعة العصافير · نسخة الموبايل 1.7</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const load=k=>{try{return JSON.parse(localStorage.getItem('bfm_'+k)||'[]')}catch{return []}};
+const save=(k,v)=>{localStorage.setItem('bfm_'+k,JSON.stringify(v));dbPut(k,v).catch(()=>{})};
+let db=null;const DB_READY=new Promise(resolve=>{if(!('indexedDB' in window)){resolve(false);return}const req=indexedDB.open('BirdFarmManagerDB',1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('collections'))req.result.createObjectStore('collections',{keyPath:'name'})};req.onsuccess=()=>{db=req.result;resolve(true);migrateToIndexedDB()};req.onerror=()=>resolve(false)});
+function dbPut(name,value){return DB_READY.then(ok=>{if(!ok||!db)return;return new Promise((res,rej)=>{const tx=db.transaction('collections','readwrite');tx.objectStore('collections').put({name,value,updatedAt:new Date().toISOString()});tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})})}
+async function migrateToIndexedDB(){for(const k of ['birds','pairs','eggs','meds','birdEvents','birdNotes','chicks','seasons','finance']){const raw=localStorage.getItem('bfm_'+k);if(raw){try{await dbPut(k,JSON.parse(raw))}catch{}}}}
+let birds=load('birds'),pairs=load('pairs'),eggs=load('eggs'),meds=load('meds'),birdEvents=load('birdEvents'),birdNotes=load('birdNotes'),chicks=load('chicks'),seasons=load('seasons'),finance=load('finance');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>s?new Date(s+'T00:00:00').toLocaleDateString('ar-EG'):'—';
+const addDays=(date,n)=>{if(!date)return '';let d=new Date(date+'T00:00:00');d.setDate(d.getDate()+Number(n||0));return d.toISOString().slice(0,10)};
+function persist(){save('birds',birds);save('pairs',pairs);save('eggs',eggs);save('meds',meds);save('birdEvents',birdEvents);save('birdNotes',birdNotes);save('chicks',chicks);save('seasons',seasons);save('finance',finance);render()}
+pairs=pairs.map(p=>{
+ if(p.maleId&&p.femaleId)return p;
+ const m=birds.find(b=>b.ring===p.male&&(b.species===p.species||!p.species));
+ const f=birds.find(b=>b.ring===p.female&&(b.species===p.species||!p.species));
+ return {...p,maleId:p.maleId||m?.id||'',femaleId:p.femaleId||f?.id||'',endDate:p.endDate||''};
+});
+eggs=eggs.map(x=>{
+ if(x.pairId)return x;
+ const p=pairs.find(p=>p.code===x.pair);
+ return p?{...x,pairId:p.id,maleId:p.maleId||'',femaleId:p.femaleId||'',maleRing:p.male||'',femaleRing:p.female||'',pairAssociationDate:p.date||'',pairAssociationEndDate:p.endDate||''}:x;
+});
+function switchPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('hidden',x.id!==p));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.page===p))}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>switchPage(b.dataset.page));
+function actions(type,id){return `<button class="outline" onclick="editItem('${type}','${id}')">تعديل</button> <button class="danger" onclick="deleteItem('${type}','${id}')">حذف</button>`}
+window.deleteItem=(type,id)=>{if(!confirm('هل تريد حذف السجل؟'))return;if(type==='bird'){birds=birds.filter(x=>x.id!==id);birds=birds.map(b=>({...b,father:b.father===id?'':b.father,mother:b.mother===id?'':b.mother}))}if(type==='pair'){if(eggs.some(x=>x.pairId===id)){alert('لا يمكن حذف زوج مرتبط بسجلات بيض. أنهِ الارتباط بدلًا من حذفه للحفاظ على السجل التاريخي.');return}pairs=pairs.filter(x=>x.id!==id)}if(type==='egg'){eggs=eggs.filter(x=>x.id!==id)}if(type==='med'){meds=meds.filter(x=>x.id!==id)}persist()};
+window.editItem=(type,id)=>{
+ let x=(type==='bird'?birds:type==='pair'?pairs:type==='egg'?eggs:meds).find(v=>v.id===id);if(!x)return;
+ const map=type==='bird'?{birdEditId:'id',birdSpecies:'species',birdRing:'ring',birdSex:'sex',birdHatch:'hatch',birdMutation:'mutation',birdSource:'source',birdStatus:'status',birdFather:'father',birdMother:'mother',birdNotes:'notes',birdPurchaseDate:'purchaseDate',birdPurchasePrice:'purchasePrice',birdApproxAge:'approxAge',birdLifeStage:'lifeStage',birdHealth:'health',birdOwnership:'ownership',birdSaleDate:'saleDate',birdBuyer:'buyer',birdBuyerPhone:'buyerPhone',birdSalePrice:'salePrice'}:type==='pair'?{pairEditId:'id',pairCode:'code',pairSpecies:'species',maleRing:'male',femaleRing:'female',pairDate:'date',pairStatus:'status',pairNotes:'notes'}:type==='egg'?{eggEditId:'id',eggSeason:'season',eggPair:'pair',eggNumber:'number',laidDate:'laid',incubationDays:'days',candlingDate:'candling',eggStatus:'status',fosterPair:'fosterPairId',eggIncubating:'incubating',hatchDate:'hatch',eggNotes:'notes'}:{medEditId:'id',medName:'name',medSpecies:'species',medBird:'bird',medStart:'start',medEnd:'end',medStatus:'status',medMethod:'method'};
+ Object.entries(map).forEach(([el,k])=>$(el).value=x[k]??'');if(type==='pair'){refreshPairBirdOptions();$('maleBird').value=x.maleId||'';$('femaleBird').value=x.femaleId||''}if(type==='egg')$('eggPair').value=x.pairId||pairs.find(p=>p.code===x.pair)?.id||'';if(type==='bird')refreshParentOptions();switchPage(type==='bird'?'birds':type==='pair'?'pairs':type==='egg'?'eggs':'meds');$(type+'FormTitle').textContent='تعديل السجل';
+};
+function resetForm(id,title){$(id).reset();$(id.replace('Form','EditId')).value='';$(title).textContent=title.includes('pair')?'إضافة زوج جديد':title.includes('egg')?'تسجيل بيضة / متابعة تفريخ':'تسجيل دواء / كورس'}
+
+function birdLabel(id){let b=birds.find(v=>v.id===id);return b?b.species+' — '+b.ring:'—'}
+function refreshPairBirdOptions(){
+ const maleOld=$('maleBird').value,femaleOld=$('femaleBird').value;
+ const maleOpts='<option value="">اختر الذكر</option>'+birds.filter(b=>!b.sex||b.sex==='ذكر').map(b=>`<option value="${b.id}">${esc(b.species)} — ${esc(b.ring)} (${esc(b.sex||'الجنس غير محدد')})</option>`).join('');
+ const femaleOpts='<option value="">اختر الأنثى</option>'+birds.filter(b=>!b.sex||b.sex==='أنثى').map(b=>`<option value="${b.id}">${esc(b.species)} — ${esc(b.ring)} (${esc(b.sex||'الجنس غير محدد')})</option>`).join('');
+ $('maleBird').innerHTML=maleOpts;$('femaleBird').innerHTML=femaleOpts;
+ $('maleBird').value=maleOld;$('femaleBird').value=femaleOld;
+}
+function refreshParentOptions(){
+ const opts='<option value="">غير مسجل</option>'+birds.map(b=>`<option value="${b.id}">${esc(b.species)} — ${esc(b.ring)}</option>`).join('');
+ ['birdFather','birdMother'].forEach(id=>{let old=$(id).value;$(id).innerHTML=opts;$(id).value=old});
+}
+$('birdForm').onsubmit=e=>{e.preventDefault();let id=$('birdEditId').value;let species=$('birdSpecies').value,ring=$('birdRing').value.trim();
+ if(birds.some(b=>b.species===species&&b.ring.toLowerCase()===ring.toLowerCase()&&b.id!==id)){alert('رقم الحلقة مستخدم بالفعل لهذا النوع. يمكن تكرار الرقم في نوع آخر فقط.');return}
+ let father=$('birdFather').value,mother=$('birdMother').value;
+ if(father&&father===id||mother&&mother===id){alert('لا يمكن تسجيل الطائر أبًا أو أمًا لنفسه.');return}
+ if(father&&mother&&father===mother){alert('الأب والأم لا يمكن أن يكونا نفس الطائر.');return}
+ let old=birds.find(b=>b.id===id)||{};let x={...old,id:id||uid(),species,ring,sex:$('birdSex').value,hatch:$('birdHatch').value,mutation:$('birdMutation').value.trim(),source:$('birdSource').value,status:$('birdStatus').value,father:father||'',mother:mother||'',notes:$('birdNotes').value.trim(),purchaseDate:$('birdPurchaseDate').value,purchasePrice:$('birdPurchasePrice').value,approxAge:$('birdApproxAge').value.trim(),lifeStage:$('birdLifeStage').value,health:$('birdHealth').value,ownership:$('birdOwnership').value,saleDate:$('birdSaleDate').value,buyer:$('birdBuyer').value.trim(),buyerPhone:$('birdBuyerPhone').value.trim(),salePrice:$('birdSalePrice').value,photos:old.photos||[]};
+ if(id){birds=birds.map(b=>b.id===id?x:b)}else{birds=[x,...birds]}
+ $('birdForm').reset();$('birdEditId').value='';$('birdFormTitle').textContent='تسجيل طائر جديد';persist()
+};
+$('birdCancel').onclick=()=>{$('birdForm').reset();$('birdEditId').value='';$('birdFormTitle').textContent='تسجيل طائر جديد'};
+
+$('pairForm').onsubmit=e=>{
+ e.preventDefault();
+ let id=$('pairEditId').value, maleId=$('maleBird').value, femaleId=$('femaleBird').value;
+ let male=birds.find(b=>b.id===maleId), female=birds.find(b=>b.id===femaleId);
+ let date=$('pairDate').value, endDate=$('pairEndDate').value, status=$('pairStatus').value;
+ if(!male||!female){alert('اختر الذكر والأنثى من سجل الطيور أولًا.');return}
+ if(maleId===femaleId){alert('لا يمكن اختيار الطائر نفسه ذكرًا وأنثى.');return}
+ if(male.sex && male.sex!=='ذكر'){alert('الطائر المختار للذكر مسجل في سجل الطيور كـ '+male.sex+'. راجع بيانات الجنس.');return}
+ if(female.sex && female.sex!=='أنثى'){alert('الطائر المختار للأنثى مسجل في سجل الطيور كـ '+female.sex+'. راجع بيانات الجنس.');return}
+ if(!date){alert('أدخل تاريخ بداية الارتباط.');return}
+ if(endDate && endDate<date){alert('تاريخ نهاية الارتباط لا يمكن أن يسبق تاريخ البداية.');return}
+ if(status==='نشط' && endDate){alert('إذا كان الارتباط نشطًا، اترك تاريخ النهاية فارغًا.');return}
+ if(status!=='نشط' && !endDate){alert('أدخل تاريخ نهاية الارتباط للزوج المتوقف أو المنتهي.');return}
+ let duplicate=pairs.find(p=>p.id!==id && p.code.toLowerCase()===$('pairCode').value.trim().toLowerCase());
+ if(duplicate){alert('رقم الزوج مسجل بالفعل');return}
+ let conflict=pairs.find(p=>p.id!==id && p.status==='نشط' && (p.maleId===maleId||p.femaleId===maleId||p.maleId===femaleId||p.femaleId===femaleId));
+ if(status==='نشط' && conflict){alert('أحد الطائرين مرتبط بالفعل بزوج نشط ('+conflict.code+'). أنهِ الارتباط السابق أولًا.');return}
+ let x={id:id||uid(),code:$('pairCode').value.trim(),species:$('pairSpecies').value,maleId,femaleId,
+   male:male.ring,female:female.ring,date,endDate,status,notes:$('pairNotes').value,
+   associationHistory:[...(id?(pairs.find(p=>p.id===id)?.associationHistory||[]):[])]};
+ if(id){let prev=pairs.find(p=>p.id===id);if(prev && (prev.maleId!==maleId||prev.femaleId!==femaleId||prev.date!==date||prev.endDate!==endDate)){
+   x.associationHistory.push({maleId:prev.maleId||'',femaleId:prev.femaleId||'',start:prev.date||'',end:prev.endDate||date,code:prev.code});
+ }}
+ pairs=id?pairs.map(p=>p.id===id?x:p):[x,...pairs];
+ $('pairForm').reset();$('pairEditId').value='';$('pairFormTitle').textContent='إضافة زوج جديد';persist()
+};
+$('eggForm').onsubmit=e=>{
+ e.preventDefault();let id=$('eggEditId').value, pair=pairs.find(p=>p.id===$('eggPair').value);
+ if(!pair){alert('اختر زوجًا صحيحًا.');return}
+ let x={id:id||uid(),season:$('eggSeason').value,pair:pair.code,pairId:pair.id,
+   maleId:pair.maleId||'',femaleId:pair.femaleId||'',maleRing:pair.male||'',femaleRing:pair.female||'',
+   pairAssociationDate:pair.date||'',pairAssociationEndDate:pair.endDate||'',
+   number:$('eggNumber').value,laid:$('laidDate').value,days:$('incubationDays').value||18,
+   candling:$('candlingDate').value,status:$('eggStatus').value,foster:$('fosterPair').value,fosterPairId:$('fosterPair').value,incubating:$('eggIncubating').value,
+   hatch:$('hatchDate').value,notes:$('eggNotes').value};
+ eggs=id?eggs.map(v=>v.id===id?x:v):[x,...eggs];
+ $('eggForm').reset();$('eggEditId').value='';$('incubationDays').value=18;
+ $('eggFormTitle').textContent='تسجيل بيضة / متابعة تفريخ';persist()
+};
+$('medForm').onsubmit=e=>{e.preventDefault();let id=$('medEditId').value;let x={id:id||uid(),name:$('medName').value,species:$('medSpecies').value,bird:$('medBird').value,start:$('medStart').value,end:$('medEnd').value,status:$('medStatus').value,method:$('medMethod').value};meds=id?meds.map(v=>v.id===id?x:v):[x,...meds];$('medForm').reset();$('medEditId').value='';$('medFormTitle').textContent='تسجيل دواء / كورس';persist()};
+$('pairCancel').onclick=()=>{$('pairForm').reset();$('pairEditId').value='';$('pairFormTitle').textContent='إضافة زوج جديد'};
+$('eggCancel').onclick=()=>{$('eggForm').reset();$('eggEditId').value='';$('incubationDays').value=18;$('eggFormTitle').textContent='تسجيل بيضة / متابعة تفريخ'};
+$('medCancel').onclick=()=>{$('medForm').reset();$('medEditId').value='';$('medFormTitle').textContent='تسجيل دواء / كورس'};
+function render(){
+ refreshParentOptions();
+ let bq=$('birdSearch').value.toLowerCase(),bsf=$('birdSpeciesFilter').value,by=$('birdRingYearFilter').value;
+ let bfiltered=birds.filter(b=>(!bsf||b.species===bsf)&&(!by||ringYear(b.ring)===by)&&(b.species+' '+b.ring+' '+b.mutation+' '+b.sex).toLowerCase().includes(bq));
+ $('birdsTable').innerHTML=bfiltered.map(b=>`<tr><td>${esc(b.species)}</td><td><b>${esc(b.ring)}</b></td><td>${esc(b.sex)||'—'}</td><td>${esc(b.hatch?birdAge(b.hatch):b.approxAge||'—')}</td><td>${esc(b.lifeStage||'غير محدد')}</td><td>${esc(b.ownership||'عندي')}</td><td>${esc(b.health||'طبيعي')}</td><td><button class="outline" onclick="openBirdProfile('${b.id}')">الملف</button> ${actions('bird',b.id)}</td></tr>`).join('');
+ $('birdsEmpty').classList.toggle('hidden',bfiltered.length>0);
+ $('birdCount').textContent=birds.filter(b=>(b.ownership||'عندي')!=='اتباع'&&b.status!=='نافق'&&b.status!=='مفقود').length;$('pairCount').textContent=pairs.length;$('eggCount').textContent=eggs.length;$('hatchedCount').textContent=eggs.filter(x=>x.status==='فقس').length;$('medCount').textContent=meds.filter(x=>x.status==='مستمر').length;
+ const fertile=eggs.filter(x=>['مخصب','فقس'].includes(x.status)).length,clear=eggs.filter(x=>x.status==='غير مخصب').length,rotten=eggs.filter(x=>['تالف','تالف / بايظ','بازي','فاسد'].includes(x.status)).length,inc=eggs.filter(x=>(x.incubating||'نعم')==='نعم'&&!['فقس','غير مخصب','تالف','تالف / بايظ','بازي','فاسد'].includes(x.status)).length;
+ const dead=chicks.filter(c=>(c.lifeStatus||'حي')==='نافق').length,alive=chicks.filter(c=>(c.lifeStatus||'حي')!=='نافق').length,brooders=pairs.filter(p=>p.brooding==='نعم'||eggs.some(e=>(e.fosterPairId===p.id||e.pairId===p.id)&&e.incubating==='نعم')).length;
+ $('fertileCount').textContent=fertile;$('clearCount').textContent=clear;$('rottenCount').textContent=rotten;$('incubatingCount').textContent=inc;$('broodingPairsCount').textContent=brooders;$('chicksHatchedCount').textContent=chicks.length;$('chicksAliveCount').textContent=alive;$('chicksDeadCount').textContent=dead;$('hatchRate').textContent=(fertile?Math.round(eggs.filter(x=>x.status==='فقس').length/fertile*100):0)+'%';
+ const pairRows=pairs.map(p=>{const es=eggs.filter(e=>e.pairId===p.id),cs=chicks.filter(c=>{const e=eggs.find(z=>z.id===c.eggId);return e&&e.pairId===p.id});return `<tr><td><b>${esc(p.code)}</b></td><td>${es.length}</td><td>${es.filter(e=>['مخصب','فقس'].includes(e.status)).length}</td><td>${es.filter(e=>e.status==='غير مخصب').length}</td><td>${es.filter(e=>['تالف','تالف / بايظ','بازي','فاسد'].includes(e.status)).length}</td><td>${es.filter(e=>e.status==='فقس').length}</td><td>${cs.filter(c=>(c.lifeStatus||'حي')==='نافق').length}</td><td>${eggs.filter(e=>(e.pairId===p.id||e.fosterPairId===p.id)&&(e.incubating||'نعم')==='نعم'&&!['فقس','غير مخصب','تالف','تالف / بايظ','بازي','فاسد'].includes(e.status)).length}</td></tr>`}).join('');$('pairProductionTable').innerHTML=pairRows;$('pairProductionEmpty').classList.toggle('hidden',pairs.length>0);
+ const years=[...new Set(birds.map(b=>ringYear(b.ring)).filter(Boolean))].sort().reverse(),ys=$('birdRingYearFilter'),old=ys.value;ys.innerHTML='<option value="">كل سنوات الحلقات</option>'+years.map(y=>`<option value="${esc(y)}">${esc(y)}</option>`).join('');ys.value=years.includes(old)?old:'';$('birdSearchHints').innerHTML=[...new Set(birds.map(b=>b.ring).filter(Boolean))].map(x=>`<option value="${esc(x)}"></option>`).join('');
+ 
+ refreshPairBirdOptions();
+ $('eggPair').innerHTML='<option value="">اختر الزوج</option>'+pairs.map(p=>`<option value="${p.id}">${esc(p.code)} — ${esc(p.species)} (${esc(p.status)})</option>`).join('');$('fosterPair').innerHTML='<option value="">لا يوجد / الزوج المنتج</option>'+pairs.map(p=>`<option value="${p.id}">${esc(p.code)} — ${esc(p.species)}</option>`).join('');
+ const q=$('pairSearch').value.toLowerCase();let ps=pairs.filter(p=>(p.code+' '+p.species+' '+p.male+' '+p.female+' '+birdLabel(p.maleId)+' '+birdLabel(p.femaleId)).toLowerCase().includes(q));
+ $('pairsTable').innerHTML=ps.map(p=>`<tr><td><b>${esc(p.code)}</b></td><td>${esc(p.species)}</td><td>${esc(p.maleId?birdLabel(p.maleId):p.male)||'—'}</td><td>${esc(p.femaleId?birdLabel(p.femaleId):p.female)||'—'}</td><td>${fmt(p.date)}</td><td>${fmt(p.endDate)}</td><td><span class="pill ${p.status==='نشط'?'':'amber'}">${esc(p.status)}</span></td><td>${actions('pair',p.id)}</td></tr>`).join('');$('pairsEmpty').classList.toggle('hidden',ps.length>0);
+ const eq=$('eggSearch').value.toLowerCase(),ef=$('eggFilter').value;let es=eggs.filter(x=>(x.pair||'').toLowerCase().includes(eq)&&(!ef||x.status===ef));
+ $('eggsTable').innerHTML=es.map(x=>`<tr><td>${esc(x.pair)}</td><td>${esc(x.number)||'—'}</td><td>${fmt(x.laid)}</td><td>${fmt(addDays(x.laid,x.days))}</td><td><span class="pill ${x.status==='فقس'?'':x.status==='تالف'||x.status==='غير مخصب'?'red':'blue'}">${esc(x.status)}</span></td><td>${fmt(x.hatch)}</td><td>${actions('egg',x.id)}</td></tr>`).join('');$('eggsEmpty').classList.toggle('hidden',es.length>0);
+ $('profileBird').innerHTML='<option value="">اختر طائرًا</option>'+birds.map(b=>`<option value="${b.id}">${esc(b.species)} — ${esc(b.ring)}</option>`).join('');if(window.currentProfileBird && birds.some(b=>b.id===window.currentProfileBird))$('profileBird').value=window.currentProfileBird;renderBirdProfile();
+ $('chickEgg').innerHTML='<option value="">اختر البيضة</option>'+eggs.filter(x=>x.status==='فقس').map(x=>`<option value="${x.id}">${esc(x.pair)} — بيضة ${esc(x.number||'')}</option>`).join('');$('chicksTable').innerHTML=chicks.map(c=>{let e=eggs.find(x=>x.id===c.eggId),p=e&&pairs.find(x=>x.id===e.pairId);return `<tr><td>${esc(e?.number||'—')}</td><td>${esc(p?.code||e?.pair||'—')}</td><td>${fmt(c.hatch)}</td><td>${esc(c.sex||'غير معروف')}</td><td>${esc(c.weight||'—')}</td><td>${esc(c.lifeStatus||'حي')} ${fmt(c.deathDate)}</td><td>${esc(c.weaned)} ${fmt(c.weanDate)}</td><td>${c.converted?'تم تحويله لطائر':`<button class="outline" onclick="convertChick('${c.id}')">تحويل لسجل الطيور</button>`}</td></tr>`}).join('');$('chicksEmpty').classList.toggle('hidden',chicks.length>0);
+ $('medsTable').innerHTML=meds.map(x=>`<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.species)||'—'}</td><td>${esc(x.bird)||'—'}</td><td>${fmt(x.start)}</td><td>${fmt(x.end)}</td><td><span class="pill ${x.status==='مستمر'?'amber':''}">${esc(x.status)}</span></td><td>${actions('med',x.id)}</td></tr>`).join('');$('medsEmpty').classList.toggle('hidden',meds.length>0);
+ $('recentPairs').innerHTML=pairs.length?`<div class="tablewrap"><table><thead><tr><th>رقم الزوج</th><th>النوع</th><th>الحالة</th></tr></thead><tbody>${pairs.slice(0,5).map(p=>`<tr><td>${esc(p.code)}</td><td>${esc(p.species)}</td><td>${esc(p.status)}</td></tr>`).join('')}</tbody></table></div>`:'لا توجد بيانات حتى الآن.';
+ let active=meds.filter(m=>m.status==='مستمر');$('medAlerts').innerHTML=active.length?active.map(m=>`<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>${esc(m.name)}</b> — ${esc(m.bird||m.species||'طائر غير محدد')} · نهاية الكورس: ${fmt(m.end)}</div>`).join(''):'لا توجد كورسات مستمرة.'; renderSeasonFinance();
+}
+['birdSearch','birdSpeciesFilter','birdRingYearFilter','pairSearch','eggSearch','eggFilter'].forEach(id=>$(id).addEventListener('input',render));
+$('exportBtn').onclick=()=>{let data={app:'إدارة مزرعة العصافير',version:3,exportedAt:new Date().toISOString(),birds,pairs,eggs,meds,birdEvents,birdNotes,chicks,seasons,finance};let a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.href=url;a.download='bird-farm-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url)};
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.pairs)||!Array.isArray(d.eggs)||!Array.isArray(d.meds))throw Error();const allRecords=[...(Array.isArray(d.birds)?d.birds:[]),...d.pairs,...d.eggs,...d.meds,...(Array.isArray(d.chicks)?d.chicks:[]),...(Array.isArray(d.birdEvents)?d.birdEvents:[]),...(Array.isArray(d.birdNotes)?d.birdNotes:[]),...(Array.isArray(d.finance)?d.finance:[]),...(Array.isArray(d.seasons)?d.seasons:[])];if(allRecords.some(x=>x.id!=null&&!/^[a-zA-Z0-9_-]{1,80}$/.test(String(x.id))))throw Error('معرّف غير آمن');if(!confirm('سيتم استبدال البيانات الحالية ببيانات النسخة الاحتياطية. هل تريد المتابعة؟'))return;birds=Array.isArray(d.birds)?d.birds:[];pairs=d.pairs;eggs=d.eggs;meds=d.meds;birdEvents=Array.isArray(d.birdEvents)?d.birdEvents:[];birdNotes=Array.isArray(d.birdNotes)?d.birdNotes:[];chicks=Array.isArray(d.chicks)?d.chicks:[];seasons=Array.isArray(d.seasons)?d.seasons:[];finance=Array.isArray(d.finance)?d.finance:[];persist();alert('تم استيراد النسخة الاحتياطية')}catch{alert('ملف النسخة الاحتياطية غير صالح')}e.target.value=''};
+
+// إدارة المواسم والحركات المالية والتقارير الزمنية
+const money=n=>Number(n||0).toLocaleString('ar-EG',{maximumFractionDigits:2})+' ج.م';
+const inRange=(date,from,to)=>!!date&&(!from||date>=from)&&(!to||date<=to);
+function localDay(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}function periodRange(kind,from,to){const now=new Date(),d=new Date(now.getFullYear(),now.getMonth(),now.getDate());let a='',b='';if(kind==='week'){let day=(d.getDay()+6)%7;let x=new Date(d);x.setDate(d.getDate()-day);a=localDay(x);let y=new Date(x);y.setDate(x.getDate()+6);b=localDay(y)}else if(kind==='month'){a=localDay(new Date(d.getFullYear(),d.getMonth(),1));b=localDay(new Date(d.getFullYear(),d.getMonth()+1,0))}else if(kind==='year'){a=d.getFullYear()+'-01-01';b=d.getFullYear()+'-12-31'}else if(kind==='custom'){a=from||'';b=to||''}return {from:a,to:b}}
+function selectedRange(prefix){let kind=$(prefix+'Period').value,seasonId=$(prefix==='dash'?'dashSeason':'financeSeasonFilter').value;if(kind==='season'){let z=seasons.find(x=>x.id===seasonId);return z?{from:z.start||'',to:z.end||'9999-12-31',seasonId}:{from:'9999-12-31',to:'0000-01-01',seasonId:'__none__'}}let r=periodRange(kind,$(prefix+'From').value,$(prefix+'To').value);return {...r,seasonId:kind==='all'?'':seasonId}}
+function renderSeasonFinance(){
+ const fill=(id,first)=>{let old=$(id).value;$(id).innerHTML=`<option value="">${first}</option>`+seasons.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('');$(id).value=old};fill('dashSeason','اختر الموسم');fill('financeSeason','بدون موسم');fill('financeSeasonFilter','كل المواسم');let eggSeasonOld=$('eggSeason').value;$('eggSeason').innerHTML='<option value="">اختر الموسم</option>'+seasons.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('');if(seasons.some(x=>x.id===eggSeasonOld))$('eggSeason').value=eggSeasonOld;
+ $('seasonsTable').innerHTML=seasons.map(x=>`<tr><td>${esc(x.name)}</td><td>${fmt(x.start)}</td><td>${fmt(x.end)}</td><td>${esc(x.status)}</td><td><button class="outline" onclick="editSeason('${x.id}')">تعديل</button> <button class="danger" onclick="deleteSeason('${x.id}')">حذف</button></td></tr>`).join('');$('seasonsEmpty').classList.toggle('hidden',seasons.length>0);
+ let active=$('activeSeason').value;$('activeSeason').innerHTML='<option value="">اختر موسمًا</option>'+seasons.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('');if(seasons.some(x=>x.id===active))$('activeSeason').value=active;else if(seasons.length)$('activeSeason').value=seasons[0].id;
+ const sid=$('activeSeason').value,season=seasons.find(x=>x.id===sid),se=eggs.filter(x=>x.season===sid),sc=chicks.filter(x=>x.season===sid),fert=se.filter(x=>x.status==='مخصب'||x.status==='فقس').length,hat=se.filter(x=>x.status==='فقس').length;
+ $('seasonPairs').textContent=new Set(se.map(x=>x.pairId||x.pair).filter(Boolean)).size;$('seasonEggs').textContent=se.length;$('seasonFertile').textContent=fert;$('seasonHatched').textContent=hat;$('seasonChicks').textContent=sc.length;$('seasonWeaned').textContent=sc.filter(x=>x.weaned==='مفطوم').length;$('seasonDead').textContent=sc.filter(x=>x.lifeStatus==='نافق').length;$('seasonRates').textContent=season?`الموسم: ${season.name} · نسبة التخصيب: ${se.length?Math.round(fert/se.length*100):0}% · نسبة الفقس من المخصب: ${fert?Math.round(hat/fert*100):0}%`:'أضف موسمًا واختره لعرض تقرير الإنتاج.';
+ $('seasonPairTable').innerHTML=pairs.filter(p=>se.some(e=>e.pairId===p.id||e.pair===p.code)).map(p=>{let pe=se.filter(e=>e.pairId===p.id||e.pair===p.code),pc=sc.filter(c=>{let e=eggs.find(z=>z.id===c.eggId);return e&&(e.pairId===p.id||e.pair===p.code)});return `<tr><td>${esc(p.code)}</td><td>${pe.length}</td><td>${pe.filter(e=>['مخصب','فقس'].includes(e.status)).length}</td><td>${pe.filter(e=>e.status==='فقس').length}</td><td>${pc.filter(c=>c.lifeStatus!=='نافق').length}</td><td>${pc.filter(c=>c.weaned==='مفطوم').length}</td><td>${pc.filter(c=>c.lifeStatus==='نافق').length}</td></tr>`}).join('');$('seasonPairEmpty').classList.toggle('hidden',$('seasonPairTable').children.length>0);
+ const fr=selectedRange('finance'),filtered=finance.filter(x=>inRange(x.date,fr.from,fr.to)&&(!fr.seasonId||x.seasonId===fr.seasonId));const ex=filtered.filter(x=>x.type==='expense').reduce((a,x)=>a+Number(x.amount||0),0),inc=filtered.filter(x=>x.type==='income').reduce((a,x)=>a+Number(x.amount||0),0);$('finExpenses').textContent=money(ex);$('finIncome').textContent=money(inc);$('finNet').textContent=money(inc-ex);$('finCount').textContent=filtered.length;
+ $('financeTable').innerHTML=[...finance].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>`<tr><td>${fmt(x.date)}</td><td><span class="pill ${x.type==='income'?'':'red'}">${x.type==='income'?'إيراد':'مصروف'}</span></td><td>${esc(x.category)}</td><td>${money(x.amount)}</td><td>${esc(seasons.find(z=>z.id===x.seasonId)?.name||'—')}</td><td>${esc(x.notes||'—')}</td><td><button class="outline" onclick="editFinance('${x.id}')">تعديل</button> <button class="danger" onclick="deleteFinance('${x.id}')">حذف</button></td></tr>`).join('');$('financeEmpty').classList.toggle('hidden',finance.length>0);
+ const dr=selectedRange('dash'),df=finance.filter(x=>inRange(x.date,dr.from,dr.to)&&(!dr.seasonId||x.seasonId===dr.seasonId)),de=df.filter(x=>x.type==='expense').reduce((a,x)=>a+Number(x.amount||0),0),di=df.filter(x=>x.type==='income').reduce((a,x)=>a+Number(x.amount||0),0),eg=eggs.filter(x=>inRange(x.laid,dr.from,dr.to)&&(!dr.seasonId||x.season===dr.seasonId)),ch=chicks.filter(x=>inRange(x.hatch,dr.from,dr.to)&&(!dr.seasonId||x.season===dr.seasonId));$('dashExpenses').textContent=money(de);$('dashIncome').textContent=money(di);$('dashNet').textContent=money(di-de);$('dashEggs').textContent=eg.length;$('dashFertile').textContent=eg.filter(x=>['مخصب','فقس'].includes(x.status)).length;$('dashHatched').textContent=eg.filter(x=>x.status==='فقس').length;$('dashChicks').textContent=ch.length;$('dashWeaned').textContent=ch.filter(x=>x.weaned==='مفطوم').length;
+}
+window.editSeason=id=>{let x=seasons.find(z=>z.id===id);if(!x)return;$('seasonEditId').value=x.id;$('seasonName').value=x.name;$('seasonStart').value=x.start;$('seasonEnd').value=x.end||'';$('seasonStatus').value=x.status};window.deleteSeason=id=>{if(eggs.some(e=>e.season===id)||finance.some(f=>f.seasonId===id)){alert('لا يمكن حذف موسم مرتبط ببيض أو حركات مالية. غيّر ارتباط السجلات أولًا.');return}if(confirm('حذف الموسم؟')){seasons=seasons.filter(x=>x.id!==id);persist()}};
+window.editFinance=id=>{let x=finance.find(z=>z.id===id);if(!x)return;$('financeEditId').value=x.id;$('financeType').value=x.type;$('financeCategory').value=x.category;$('financeAmount').value=x.amount;$('financeDate').value=x.date;$('financeSeason').value=x.seasonId||'';$('financeMethod').value=x.method||'نقدي';$('financeNotes').value=x.notes||'';switchPage('finance')};window.deleteFinance=id=>{if(confirm('حذف الحركة المالية؟')){finance=finance.filter(x=>x.id!==id);persist()}};
+$('seasonForm').onsubmit=e=>{e.preventDefault();let id=$('seasonEditId').value,x={id:id||uid(),name:$('seasonName').value.trim(),start:$('seasonStart').value,end:$('seasonEnd').value,status:$('seasonStatus').value};if(x.end&&x.end<x.start){alert('تاريخ نهاية الموسم يسبق بدايته');return}seasons=id?seasons.map(z=>z.id===id?x:z):[x,...seasons];$('seasonForm').reset();$('seasonEditId').value='';persist()};$('seasonCancel').onclick=()=>{$('seasonForm').reset();$('seasonEditId').value=''};
+$('financeForm').onsubmit=e=>{e.preventDefault();let id=$('financeEditId').value,x={id:id||uid(),type:$('financeType').value,category:$('financeCategory').value,amount:Number($('financeAmount').value),date:$('financeDate').value,seasonId:$('financeSeason').value,method:$('financeMethod').value,notes:$('financeNotes').value.trim()};if(!(x.amount>0)){alert('أدخل مبلغًا أكبر من صفر');return}finance=id?finance.map(z=>z.id===id?x:z):[x,...finance];$('financeForm').reset();$('financeEditId').value='';$('financeDate').value=new Date().toISOString().slice(0,10);persist()};$('financeCancel').onclick=()=>{$('financeForm').reset();$('financeEditId').value='';$('financeDate').value=new Date().toISOString().slice(0,10)};
+['dashPeriod','dashSeason','dashFrom','dashTo','financePeriod','financeSeasonFilter','financeFrom','financeTo','activeSeason'].forEach(id=>$(id).addEventListener('change',()=>{['dash','finance'].forEach(prefix=>{let custom=$(prefix+'Period').value==='custom';$(prefix+'From').classList.toggle('hidden',!custom);$(prefix+'To').classList.toggle('hidden',!custom)});renderSeasonFinance()}));$('financeDate').value=new Date().toISOString().slice(0,10);
+function ringYear(ring){const m=String(ring||'').match(/(?:^|[^0-9])(20\d{2})(?:[^0-9]|$)/);return m?m[1]:''}
+function birdAge(date){if(!date)return '—';let d=new Date(date+'T00:00:00'),n=new Date();if(d>n)return 'تاريخ مستقبلي';let y=n.getFullYear()-d.getFullYear(),m=n.getMonth()-d.getMonth(),day=n.getDate()-d.getDate();if(day<0)m--;if(m<0){y--;m+=12}return (y?y+' سنة ':'')+(m?m+' شهر':'')||'أقل من شهر'}
+window.openBirdProfile=id=>{window.currentProfileBird=id;$('profileBird').value=id;renderBirdProfile();document.getElementById('birdProfile').scrollIntoView({behavior:'smooth',block:'center'})};
+function renderBirdProfile(){let id=window.currentProfileBird||$('profileBird').value,b=birds.find(x=>x.id===id);if(!b){$('birdProfile').innerHTML='اختر طائرًا لعرض صوره وتاريخه الصحي وملاحظاته وشجرة عائلته.';$('birdProfilePhotos').innerHTML='';$('birdEventsList').innerHTML='لا توجد أحداث مسجلة.';$('birdNotesList').innerHTML='';$('birdFamily').innerHTML='اختر طائرًا لعرض نسبه.';return}window.currentProfileBird=id;
+ let age=b.hatch?birdAge(b.hatch):(b.approxAge||'غير معروف');$('birdProfile').innerHTML=`<b>${esc(b.species)} — ${esc(b.ring)}</b><p>العمر: ${esc(age)} · المرحلة: ${esc(b.lifeStage||'غير محدد')} · الجنس: ${esc(b.sex||'غير معروف')}</p><p>المصدر: ${esc(b.source||'غير محدد')} · الملكية: <b>${esc(b.ownership||'عندي')}</b> · الصحة: ${esc(b.health||'طبيعي')}</p><p>تاريخ الفقس: ${fmt(b.hatch)} · تاريخ الشراء: ${fmt(b.purchaseDate)} ${b.purchasePrice?'· سعر الشراء: '+esc(b.purchasePrice):''}</p>${(b.ownership==='اتباع'||b.status==='مباع')?`<p>البيع: ${fmt(b.saleDate)} · المشتري: ${esc(b.buyer||'غير مسجل')} · الهاتف: ${esc(b.buyerPhone||'—')} · السعر: ${esc(b.salePrice||'—')}</p>`:''}<p>ملاحظات عامة: ${esc(b.notes||'—')}</p>`;
+ $('birdProfilePhotos').innerHTML=(b.photos||[]).filter(src=>/^data:image\/(jpeg|png|webp);base64,/i.test(String(src))).map(src=>`<img src="${esc(src)}" alt="صورة الطائر" style="width:110px;height:110px;object-fit:cover;border-radius:12px;border:1px solid var(--line)">`).join('');
+ let ev=birdEvents.filter(x=>x.birdId===id).sort((a,b)=>(b.start||'').localeCompare(a.start||''));$('birdEventsList').innerHTML=ev.length?ev.map(x=>`<div style="padding:10px;border-bottom:1px solid var(--line)"><b>${esc(x.type)} — ${esc(x.name||'بدون اسم')}</b><div>${fmt(x.start)} إلى ${fmt(x.end)} · ${esc(x.status)}</div><div>${esc(x.dose||'')}</div><div>${esc(x.notes||'')}</div></div>`).join(''):'لا توجد أحداث مسجلة.';
+ let ns=birdNotes.filter(x=>x.birdId===id).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));$('birdNotesList').innerHTML=ns.map(x=>`<div style="padding:8px;border-bottom:1px solid var(--line)">${esc(x.text)} <small class="muted">${new Date(x.createdAt).toLocaleString('ar-EG')}</small></div>`).join('')||'<div class="empty">لا توجد ملاحظات.</div>';
+ let father=birds.find(x=>x.id===b.father),mother=birds.find(x=>x.id===b.mother),children=birds.filter(x=>x.father===id||x.mother===id),siblings=birds.filter(x=>x.id!==id&&((b.father&&x.father===b.father)||(b.mother&&x.mother===b.mother))),grandparents=[father?.father,father?.mother,mother?.father,mother?.mother].map(pid=>birds.find(x=>x.id===pid)).filter(Boolean);$('birdFamily').innerHTML=`<b>الأجداد</b><p>${grandparents.map(x=>esc(x.species+' — '+x.ring)).join('، ')||'غير مسجلين'}</p><div class="cards"><div class="stat"><small>الأب</small><div>${father?esc(father.species+' — '+father.ring):'غير مسجل'}</div></div><div class="stat"><small>الأم</small><div>${mother?esc(mother.species+' — '+mother.ring):'غير مسجلة'}</div></div></div><b>الإخوة والأخوات (${siblings.length})</b><p>${siblings.map(x=>esc(x.species+' — '+x.ring)).join('، ')||'لا يوجد أشقاء مسجلون'}</p><b>الأبناء (${children.length})</b><p>${children.map(x=>esc(x.species+' — '+x.ring)).join('، ')||'لا يوجد أبناء مسجلون'}</p>`;
+}
+
+$('chickForm').onsubmit=e=>{e.preventDefault();let egg=eggs.find(x=>x.id===$('chickEgg').value);if(!egg){alert('اختر البيضة التي فقس منها الفرخ');return}let chick={id:uid(),eggId:egg.id,hatch:$('chickHatch').value,sex:$('chickSex').value,weight:$('chickWeight').value,lifeStatus:$('chickLifeStatus').value,deathDate:$('chickDeathDate').value,deathReason:$('chickDeathReason').value,weaned:$('chickWeaned').value,weanDate:$('chickWeanDate').value,notes:$('chickNotes').value.trim(),season:egg.season||'',createdAt:new Date().toISOString()};chicks.unshift(chick);$('chickForm').reset();persist()};
+window.convertChick=id=>{let c=chicks.find(x=>x.id===id);if(!c||c.converted)return;let e=eggs.find(x=>x.id===c.eggId),p=e&&pairs.find(x=>x.id===e.pairId);if(!e||!p){alert('تعذر العثور على بيانات البيضة أو الزوج المنتج');return}let species=p.species||'أخرى',ring=prompt('أدخل رقم الحلقة للفرخ الجديد:');if(!ring)return;if(birds.some(b=>b.species===species&&b.ring.toLowerCase()===ring.trim().toLowerCase())){alert('رقم الحلقة مستخدم لهذا النوع');return}let b={id:uid(),species,ring:ring.trim(),sex:c.sex,hatch:c.hatch,mutation:'',source:'إنتاج المزرعة',status:'موجود',father:p.maleId||'',mother:p.femaleId||'',notes:'تم تحويله من سجل الفروخ. الزوج المنتج: '+p.code+'؛ ملاحظات: '+(c.notes||''),lifeStage:'زغلول',health:'طبيعي',ownership:'عندي',photos:[],originEggId:e.id,originPairId:p.id,season:c.season||''};birds.unshift(b);c.converted=true;c.birdId=b.id;persist();alert('تم إنشاء ملف للطائر مع ربط الأب والأم والبيضة والزوج المنتج')};
+
+$('profileBird').addEventListener('change',()=>{window.currentProfileBird=$('profileBird').value;renderBirdProfile()});
+$('birdPhotos').addEventListener('change',async e=>{let b=birds.find(x=>x.id===($('profileBird').value||window.currentProfileBird));if(!b){alert('اختر الطائر أولًا');e.target.value='';return}b.photos=b.photos||[];for(const f of [...e.target.files]){if(!f.type.startsWith('image/'))continue;if(f.size>2*1024*1024){alert('الصورة أكبر من 2 ميجابايت وتم تجاوزها: '+f.name);continue}let data=await new Promise(resolve=>{let r=new FileReader();r.onload=()=>{let img=new Image();img.onload=()=>{let c=document.createElement('canvas'),scale=Math.min(1,1000/Math.max(img.width,img.height));c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext('2d').drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.78))};img.src=r.result};r.readAsDataURL(f)});b.photos.push(data)}persist();e.target.value=''});
+$('birdEventForm').onsubmit=e=>{e.preventDefault();let birdId=$('profileBird').value||window.currentProfileBird;if(!birds.some(x=>x.id===birdId)){alert('اختر الطائر أولًا');return}let start=$('eventStart').value,end=$('eventEnd').value;if(end&&end<start){alert('تاريخ النهاية يسبق البداية');return}birdEvents.unshift({id:uid(),birdId,type:$('eventType').value,name:$('eventName').value.trim(),start,end,dose:$('eventDose').value.trim(),status:$('eventStatus').value,notes:$('eventNotes').value.trim()});$('birdEventForm').reset();persist()};
+$('addBirdNote').onclick=()=>{let birdId=$('profileBird').value||window.currentProfileBird,text=$('birdQuickNote').value.trim();if(!birds.some(x=>x.id===birdId)||!text){alert('اختر الطائر واكتب الملاحظة');return}birdNotes.unshift({id:uid(),birdId,text,createdAt:new Date().toISOString()});$('birdQuickNote').value='';persist()};
+
+if('serviceWorker' in navigator && location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+render();
+</script>
+</body></html>
